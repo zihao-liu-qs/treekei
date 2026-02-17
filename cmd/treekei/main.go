@@ -12,8 +12,62 @@ import (
 	"github.com/zihao-liu-qs/treekei/internal/scanner"
 )
 
+func init() {
+	rootCmd.Flags().BoolVarP(
+		&showAll,
+		"all",
+		"a",
+		false, // default value
+		"Include hidden files",
+	)
+
+	rootCmd.Flags().IntVarP(
+		&maxDepth,
+		"level",
+		"L",
+		0, // 0 for infinite depth
+		"Max display depth (0 means unlimited)",
+	)
+
+	rootCmd.Flags().StringVarP(
+		&sortBy,
+		"sort",
+		"s",
+		"lines",                 // default sort by lines
+		"Sort by: lines | name", // lines = scanner.SortByLines name = scanner.SortByName
+	)
+
+	rootCmd.Flags().BoolVar(
+		&noColor,
+		"no-color",
+		false,
+		"Disable colored output",
+	)
+
+	rootCmd.Flags().BoolVarP(
+		&dirOnly,
+		"dir-only",
+		"d",
+		false,
+		"List directories only",
+	)
+
+	rootCmd.Flags().StringVarP(
+		&langs,
+		"lang",
+		"l",
+		"",
+		"Filter by language(s), comma-separated (e.g. go,ts)",
+	)
+}
+
 var (
-	showAll bool
+	showAll  bool
+	maxDepth int
+	sortBy   string
+	noColor  bool
+	dirOnly  bool
+	langs    string
 )
 
 var rootCmd = &cobra.Command{
@@ -33,8 +87,15 @@ var rootCmd = &cobra.Command{
 			os.Exit(1)
 		}
 
-		s := scanner.NewScanner(showAll)
-		p := &printer.Printer{}
+		var s *scanner.Scanner
+		switch sortBy {
+		case string(scanner.SortByLines):
+			s = scanner.NewScanner(showAll, scanner.SortByLines, langs)
+		case string(scanner.SortByName):
+			s = scanner.NewScanner(showAll, scanner.SortByName, langs)
+		}
+
+		p := printer.NewPrinter(maxDepth, noColor, dirOnly)
 
 		root, errors := s.ScanDirectory(absPath)
 		if root == nil {
@@ -42,7 +103,7 @@ var rootCmd = &cobra.Command{
 			os.Exit(1)
 		}
 
-		p.PrintTree(root, "", true, true)
+		p.PrintTree(root, "", true, true, 0)
 
 		if len(errors) > 0 {
 			fmt.Fprintf(os.Stderr, "\n%d error(s) encountered:\n", len(errors))
@@ -51,17 +112,6 @@ var rootCmd = &cobra.Command{
 			}
 		}
 	},
-}
-
-func init() {
-	// default is false
-	rootCmd.Flags().BoolVarP(
-		&showAll,
-		"all",
-		"a",
-		false,
-		"Include hidden files",
-	)
 }
 
 func main() {
