@@ -28,6 +28,7 @@ Existing command-line tools like `tree` can display the directory structure, and
 ### macOS
 
 ```shell
+brew update
 brew tap zihao-liu-qs/treekei
 brew install treekei
 ```

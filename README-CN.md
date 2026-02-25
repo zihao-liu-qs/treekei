@@ -25,6 +25,7 @@ treekei将文件树与代码行数融合在一起，让你在拿到一个新项�
 ### macOS
 
 ```shell
+brew update
 brew tap zihao-liu-qs/treekei
 brew install treekei
 ```
