@@ -1,0 +1,79 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - 'v*'  # 只有 push tag 才触发
+
+jobs:
+  build:
+    name: Build Binaries
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [darwin, linux, windows]
+        arch: [amd64, arm64]
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: 1.26
+
+      - name: Build binary
+        run: |
+          OUTPUT=treekei
+          EXT=""
+          if [[ "${{ matrix.os }}" == "windows" ]]; then
+            OUTPUT=treekei.exe
+            EXT=".zip"
+          else
+            EXT=".tar.gz"
+          fi
+
+          GOOS=${{ matrix.os }} GOARCH=${{ matrix.arch }} go build -o $OUTPUT ./cmd/treekei/main.go
+
+          if [[ "${EXT}" == ".tar.gz" ]]; then
+            tar -czvf treekei_${{ matrix.os }}_${{ matrix.arch }}$EXT $OUTPUT
+          else
+            zip treekei_${{ matrix.os }}_${{ matrix.arch }}$EXT $OUTPUT
+          fi
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: treekei-${{ matrix.os }}-${{ matrix.arch }}
+          path: |
+            treekei_darwin_arm64.tar.gz
+            treekei_darwin_amd64.tar.gz
+            treekei_linux_amd64.tar.gz
+            treekei_windows_amd64.zip
+
+  release:
+    name: Create GitHub Release
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Create Release
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: ${{ github.ref_name }}
+          body: "Automated release of treekei binaries."
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload binaries to release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: artifacts/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
