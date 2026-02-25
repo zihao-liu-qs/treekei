@@ -7,14 +7,14 @@ on:
 
 jobs:
   build:
-    name: Build Binaries
+    name: Build ${{ matrix.os }}-${{ matrix.arch }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
         os: [darwin, linux, windows]
         arch: [amd64, arm64]
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Set up Go
@@ -22,8 +22,9 @@ jobs:
         with:
           go-version: 1.26
 
-      - name: Build binary
+      - name: Build binary and package
         run: |
+          # 设置输出文件名
           OUTPUT=treekei
           EXT=""
           if [[ "${{ matrix.os }}" == "windows" ]]; then
@@ -33,35 +34,34 @@ jobs:
             EXT=".tar.gz"
           fi
 
+          # 编译
           GOOS=${{ matrix.os }} GOARCH=${{ matrix.arch }} go build -o $OUTPUT ./cmd/treekei/main.go
 
+          # 打包
+          FILE_NAME=treekei-${{ matrix.os }}-${{ matrix.arch }}$EXT
           if [[ "${EXT}" == ".tar.gz" ]]; then
-            tar -czvf treekei_${{ matrix.os }}_${{ matrix.arch }}$EXT $OUTPUT
+            tar -czvf $FILE_NAME $OUTPUT
           else
-            zip treekei_${{ matrix.os }}_${{ matrix.arch }}$EXT $OUTPUT
+            zip $FILE_NAME $OUTPUT
           fi
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: treekei-${{ matrix.os }}-${{ matrix.arch }}
-          path: |
-            treekei_darwin_arm64.tar.gz
-            treekei_darwin_amd64.tar.gz
-            treekei_linux_amd64.tar.gz
-            treekei_windows_amd64.zip
+          path: treekei-${{ matrix.os }}-${{ matrix.arch }}$EXT
 
   release:
     name: Create GitHub Release
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - name: Download artifacts
+      - name: Download all artifacts
         uses: actions/download-artifact@v4
         with:
           path: artifacts
 
-      - name: Create Release
+      - name: Create GitHub Release
         id: create_release
         uses: softprops/action-gh-release@v1
         with:
