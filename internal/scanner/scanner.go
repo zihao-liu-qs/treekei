@@ -122,6 +122,10 @@ func (s *Scanner) ScanDirectory(path string) (*tree.Node, []error) {
 		childNode, childErrors := s.ScanDirectory(childPath)
 		errors = append(errors, childErrors...)
 
+		if childNode == nil {
+			continue
+		}
+
 		if s.shouldIgnore(childNode.Name) {
 			continue
 		}
