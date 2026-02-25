@@ -30,6 +30,10 @@ brew tap zihao-liu-qs/treekei
 brew install treekei
 ```
 
+### Linux
+
+您可以从 GitHub Releases 页面下载预构建的二进制文件，并将其放置在“PATH”目录中
+
 ## 可选参数
 
 - --all 包含隐藏文件

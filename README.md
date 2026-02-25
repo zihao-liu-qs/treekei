@@ -33,6 +33,10 @@ brew tap zihao-liu-qs/treekei
 brew install treekei
 ```
 
+### Linux
+
+You can download the prebuilt binary from the GitHub Releases page and place it in a directory that is included in your `PATH`
+
 ## Options
 
 - `--all`
@@ -61,7 +65,7 @@ treekei --help
 
 Currently tested on macOS (Apple Silicon).
 In theory, it should work on any Unix-like system.
-Windows is not officially supported yet.
+Windows is not officially supported yet, sorry.
 
 ### Installation Methods
 
