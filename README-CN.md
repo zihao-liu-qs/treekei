@@ -1,8 +1,6 @@
-# treekei
+# treekei - 带行数的文件树
 
 简体中文 | [English](./README.md)
-
-带行数的文件树
 
 ![Platform](https://img.shields.io/badge/platform-macOS-lightgrey)[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 

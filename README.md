@@ -1,8 +1,6 @@
-# treekei
+# Treekei - File Tree with Line Counts
 
 English | [简体中文](./README-CN.md)
-
-A file tree with line counts
 
 ![Platform](https://img.shields.io/badge/platform-macOS-lightgrey)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
