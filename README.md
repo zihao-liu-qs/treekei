@@ -13,6 +13,12 @@ Existing command-line tools like `tree` can display the directory structure, and
 
 `treekei` combines a file tree with line counts, allowing you to quickly grasp the code distribution of a project when you first explore it.
 
+| Tool    | Tree | Line Count | Combined View |
+| ------- | ---- | ---------- | ------------- |
+| tree    | ✅    | ❌          | ❌             |
+| tokei   | ❌    | ✅          | ❌             |
+| treekei | ✅    | ✅          | ✅             |
+
 ---
 
 ## Usage

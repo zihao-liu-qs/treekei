@@ -14,6 +14,12 @@
 
 treekei将文件树与代码行数融合在一起，让你在拿到一个新项目时，可以快速了解代码量的分布
 
+| Tool    | Tree | Line Count | Combined View |
+| ------- | ---- | ---------- | ------------- |
+| tree    | ✅    | ❌          | ❌             |
+| tokei   | ❌    | ✅          | ❌             |
+| treekei | ✅    | ✅          | ✅             |
+
 ## 使用
 
 <img src="./README-CN.assets/image-20260217180441732.png" alt="image-20260217180441732" style="zoom:50%;" />
