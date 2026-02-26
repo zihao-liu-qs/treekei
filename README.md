@@ -7,6 +7,12 @@ English | [简体中文](./README-CN.md)
 
 ---
 
+## Usage
+
+<img src="./README-CN.assets/image-20260217180441732.png" alt="usage example" style="zoom:50%;" />
+
+---
+
 ## Motivation
 
 Existing command-line tools like `tree` can display the directory structure, and `tokei` can count lines of code by language. However, there isn’t a simple way to quickly understand how code is distributed across a project.
@@ -18,12 +24,6 @@ Existing command-line tools like `tree` can display the directory structure, and
 | tree    | ✅    | ❌          | ❌             |
 | tokei   | ❌    | ✅          | ❌             |
 | treekei | ✅    | ✅          | ✅             |
-
----
-
-## Usage
-
-<img src="./README-CN.assets/image-20260217180441732.png" alt="usage example" style="zoom:50%;" />
 
 ---
 

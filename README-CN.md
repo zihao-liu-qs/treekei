@@ -4,9 +4,11 @@
 
 ![Platform](https://img.shields.io/badge/platform-macOS-lightgrey)[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-
-
 ------
+
+## 使用
+
+<img src="./README-CN.assets/image-20260217180441732.png" alt="image-20260217180441732" style="zoom:50%;" />
 
 ## 动机
 
@@ -19,10 +21,6 @@ treekei将文件树与代码行数融合在一起，让你在拿到一个新项�
 | tree    | ✅    | ❌          | ❌             |
 | tokei   | ❌    | ✅          | ❌             |
 | treekei | ✅    | ✅          | ✅             |
-
-## 使用
-
-<img src="./README-CN.assets/image-20260217180441732.png" alt="image-20260217180441732" style="zoom:50%;" />
 
 ## 安装
 
