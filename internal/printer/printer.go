@@ -19,6 +19,7 @@ type Printer struct {
 	maxDepth int
 	NoColor  bool
 	DirOnly  bool
+	MinLineCount int
 }
 
 var (
@@ -30,7 +31,7 @@ var (
 	hugeLines   = color.New(color.FgRed)    // 600+ lines
 )
 
-func NewPrinter(maxDepth int, noColor bool, dirOnly bool) *Printer {
+func NewPrinter(maxDepth int, noColor bool, dirOnly bool, minLineCount int) *Printer {
 	if noColor {
 		color.NoColor = true
 	}
@@ -38,6 +39,7 @@ func NewPrinter(maxDepth int, noColor bool, dirOnly bool) *Printer {
 		maxDepth: maxDepth,
 		NoColor:  noColor,
 		DirOnly:  dirOnly,
+		MinLineCount: minLineCount,
 	}
 }
 
@@ -61,6 +63,11 @@ func (p *Printer) PrintTree(node *tree.Node, prefix string, isLast, isRoot bool,
 
 	// Skip files if dirOnly is enabled
 	if p.DirOnly && !node.IsDir && !isRoot {
+		return
+	}
+
+	// Skip nodes that have a too small line count
+	if (p.MinLineCount > 0 && node.Lines < p.MinLineCount) {
 		return
 	}
 

@@ -59,6 +59,14 @@ func init() {
 		"",
 		"Filter by language(s), comma-separated (e.g. go,ts)",
 	)
+
+	rootCmd.Flags().IntVarP(
+		&minLineCount,
+		"above",
+		"m",
+		0,
+		"Only show entries that are above a certain line count threshold",
+	)
 }
 
 var (
@@ -68,6 +76,7 @@ var (
 	noColor  bool
 	dirOnly  bool
 	langs    string
+	minLineCount int
 )
 
 var rootCmd = &cobra.Command{
@@ -95,7 +104,7 @@ var rootCmd = &cobra.Command{
 			s = scanner.NewScanner(showAll, scanner.SortByName, langs)
 		}
 
-		p := printer.NewPrinter(maxDepth, noColor, dirOnly)
+		p := printer.NewPrinter(maxDepth, noColor, dirOnly, minLineCount)
 
 		root, errors := s.ScanDirectory(absPath)
 		if root == nil {
