@@ -169,8 +169,34 @@ func countLines(path string) (lines int, isBinary bool, err error) {
 		return 0, false, err
 	}
 
-	// Check if the content is valid UTF-8 (simple text detection)
-	if !utf8.Valid(buf[:n]) {
+	// Sample the first bytes to detect binary, but strip a trailing
+	// multi-byte rune that may be cut off by the read boundary, so a
+	// valid UTF-8 character is not mistaken for binary data.
+	sample := buf[:n]
+	end := len(sample)
+	for end > 0 && !utf8.RuneStart(sample[end-1]) { // skip trailing continuation bytes
+		end--
+	}
+	if end > 0 {
+		lead := sample[end-1]
+		cont := len(sample) - end // continuation bytes after the lead
+		need := 0                 // continuation bytes this lead expects
+		switch {
+		case lead < utf8.RuneSelf: // ASCII, 1 byte
+			need = 0
+		case lead < 0xE0: // 2-byte
+			need = 1
+		case lead < 0xF0: // 3-byte
+			need = 2
+		default: // 4-byte
+			need = 3
+		}
+		if cont < need { // rune was truncated; drop the lead byte too
+			sample = sample[:end-1]
+		}
+	}
+
+	if !utf8.Valid(sample) {
 		return 0, true, nil
 	}
 
