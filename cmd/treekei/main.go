@@ -12,7 +12,11 @@ import (
 	"github.com/zihao-liu-qs/treekei/internal/scanner"
 )
 
+var version = "dev"
+
 func init() {
+	rootCmd.Version = version
+
 	rootCmd.Flags().BoolVarP(
 		&showAll,
 		"all",
@@ -70,12 +74,12 @@ func init() {
 }
 
 var (
-	showAll  bool
-	maxDepth int
-	sortBy   string
-	noColor  bool
-	dirOnly  bool
-	langs    string
+	showAll      bool
+	maxDepth     int
+	sortBy       string
+	noColor      bool
+	dirOnly      bool
+	langs        string
 	minLineCount int
 )
 

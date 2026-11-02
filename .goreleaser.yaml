@@ -1,0 +1,58 @@
+version: 2
+
+project_name: treekei
+
+builds:
+  - id: treekei
+    main: ./cmd/treekei
+    binary: treekei
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - darwin
+      - linux
+      - windows
+    goarch:
+      - amd64
+      - arm64
+    ignore:
+      - goos: windows
+        goarch: arm64
+    ldflags:
+      - -s -w -X main.version={{ .Version }}
+
+archives:
+  - id: default
+    formats: [tar.gz]
+    name_template: >-
+      {{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}
+    format_overrides:
+      - goos: windows
+        formats: [zip]
+
+checksum:
+  name_template: checksums.txt
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
+      - "^chore:"
+
+brews:
+  - name: treekei
+    repository:
+      owner: zihao-liu-qs
+      name: homebrew-treekei
+      branch: main
+      token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
+    directory: Formula
+    homepage: "https://github.com/zihao-liu-qs/treekei"
+    description: "Command-line tool showing a file tree with line counts"
+    license: "MIT"
+    install: |
+      bin.install "treekei"
+    test: |
+      system "#{bin}/treekei", "--version"
