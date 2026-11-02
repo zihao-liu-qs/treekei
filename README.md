@@ -34,6 +34,7 @@ Existing command-line tools like `tree` can display the directory structure, and
 ```shell
 brew update
 brew tap zihao-liu-qs/treekei
+brew trust --formula zihao-liu-qs/treekei/treekei   # Homebrew 7+ requires trusting third-party taps
 brew install treekei
 ```
 
@@ -83,6 +84,19 @@ go build -o treekei ./cmd/treekei/main.go
 ### Color Support
 
 If your terminal supports colors, `treekei` will display colored output.
+
+------
+
+## Releasing (maintainers)
+
+Releases are automated with [GoReleaser](https://goreleaser.com) through GitHub Actions. To cut a new release, just push a tag:
+
+```shell
+git tag v0.2.5
+git push origin v0.2.5
+```
+
+The workflow then builds binaries for all supported platforms, publishes the GitHub Release, and updates the Homebrew tap (`Formula/treekei.rb`) automatically. It requires a `HOMEBREW_TAP_GITHUB_TOKEN` Actions secret with write access to the `homebrew-treekei` repository.
 
 ------
 

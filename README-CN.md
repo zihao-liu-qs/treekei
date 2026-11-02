@@ -29,6 +29,7 @@ treekei将文件树与代码行数融合在一起，让你在拿到一个新项�
 ```shell
 brew update
 brew tap zihao-liu-qs/treekei
+brew trust --formula zihao-liu-qs/treekei/treekei   # Homebrew 7+ 需要先信任第三方 tap
 brew install treekei
 ```
 
@@ -63,6 +64,19 @@ treekei --help
 ### 颜色支持
 
 如果您的终端支持颜色，treekei会有颜色支持
+
+## 发布（维护者）
+
+发布已通过 GitHub Actions 集成 [GoReleaser](https://goreleaser.com) 自动化。要发布新版本，只需推送一个 tag：
+
+```shell
+git tag v0.2.5
+git push origin v0.2.5
+```
+
+workflow 会自动完成：为所有支持的平台构建二进制、发布 GitHub Release，并更新 Homebrew tap（`Formula/treekei.rb`）。前提是仓库里配置了 `HOMEBREW_TAP_GITHUB_TOKEN` secret（对 `homebrew-treekei` 仓库有写权限）。
+
+------
 
 ## LICENSE
 
