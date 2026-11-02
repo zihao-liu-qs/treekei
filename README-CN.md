@@ -51,6 +51,12 @@ brew install treekei
 treekei --help
 ```
 
+查看 `--lang` 支持的语言列表：
+
+```shell
+treekei list-langs
+```
+
 ## 支持平台
 
 ### 系统

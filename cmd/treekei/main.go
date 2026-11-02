@@ -71,6 +71,8 @@ func init() {
 		0,
 		"Only show entries that are above a certain line count threshold",
 	)
+
+	rootCmd.AddCommand(listLangsCmd)
 }
 
 var (
@@ -123,6 +125,17 @@ var rootCmd = &cobra.Command{
 			for _, err := range errors {
 				fmt.Fprintf(os.Stderr, "  - %v\n", err)
 			}
+		}
+	},
+}
+
+var listLangsCmd = &cobra.Command{
+	Use:   "list-langs",
+	Short: "List languages supported by the --lang filter",
+	Args:  cobra.NoArgs,
+	Run: func(cmd *cobra.Command, args []string) {
+		for _, lang := range scanner.SupportedLangs() {
+			fmt.Println(lang)
 		}
 	},
 }

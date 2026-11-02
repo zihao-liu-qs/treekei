@@ -62,6 +62,12 @@ You can view all available options with:
 treekei --help
 ```
 
+To list the language names accepted by `--lang`:
+
+```shell
+treekei list-langs
+```
+
 ------
 
 ## Supported Platforms

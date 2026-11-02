@@ -39,15 +39,45 @@ var langExtensions = map[string][]string{
 	"java":       {".java"},
 	"c":          {".c", ".h"},
 	"cpp":        {".cpp", ".cc", ".cxx", ".hpp"},
+	"csharp":     {".cs"},
+	"cs":         {".cs"},
 	"ruby":       {".rb"},
 	"rb":         {".rb"},
 	"swift":      {".swift"},
 	"kotlin":     {".kt", ".kts"},
 	"kt":         {".kt", ".kts"},
+	"php":        {".php"},
+	"scala":      {".scala"},
+	"dart":       {".dart"},
+	"lua":        {".lua"},
+	"perl":       {".pl", ".pm"},
+	"r":          {".r"},
 	"css":        {".css", ".scss", ".sass", ".less"},
 	"html":       {".html", ".htm"},
+	"vue":        {".vue"},
+	"svelte":     {".svelte"},
 	"shell":      {".sh", ".bash", ".zsh"},
 	"sh":         {".sh", ".bash", ".zsh"},
+	"yaml":       {".yaml", ".yml"},
+	"yml":        {".yaml", ".yml"},
+	"json":       {".json"},
+	"toml":       {".toml"},
+	"xml":        {".xml"},
+	"sql":        {".sql"},
+	"proto":      {".proto"},
+	"markdown":   {".md", ".markdown"},
+	"md":         {".md", ".markdown"},
+}
+
+// SupportedLangs returns the sorted list of language names accepted by the
+// --lang filter.
+func SupportedLangs() []string {
+	names := make([]string, 0, len(langExtensions))
+	for name := range langExtensions {
+		names = append(names, name)
+	}
+	sort.Strings(names)
+	return names
 }
 
 // ParseLangs converts a comma-separated language string into a set of allowed extensions.
