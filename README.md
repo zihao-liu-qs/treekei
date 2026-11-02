@@ -100,6 +100,14 @@ The workflow then builds binaries for all supported platforms, publishes the Git
 
 ------
 
+## Contributors
+
+<a href="https://github.com/zihao-liu-qs/treekei/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=zihao-liu-qs/treekei" alt="Contributors" />
+</a>
+
+------
+
 ## License
 
 MIT

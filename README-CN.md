@@ -78,6 +78,14 @@ workflow 会自动完成：为所有支持的平台构建二进制、发布 GitH
 
 ------
 
+## 贡献者
+
+<a href="https://github.com/zihao-liu-qs/treekei/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=zihao-liu-qs/treekei" alt="Contributors" />
+</a>
+
+------
+
 ## LICENSE
 
 MIT
