@@ -30,6 +30,23 @@ archives:
       - goos: windows
         formats: [zip]
 
+nfpms:
+  - id: linux-packages
+    package_name: treekei
+    vendor: zihao-liu-qs
+    homepage: "https://github.com/zihao-liu-qs/treekei"
+    maintainer: "zihao-liu-qs <zihao-liu-qs@users.noreply.github.com>"
+    description: |-
+      Command-line tool showing a file tree with line counts.
+    license: MIT
+    formats:
+      - deb
+      - rpm
+    file_name_template: "{{ .ConventionalFileName }}"
+    bindir: /usr/bin
+    section: utils
+    priority: optional
+
 checksum:
   name_template: checksums.txt
 
