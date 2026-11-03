@@ -1,0 +1,7 @@
+Origin: treekei
+Label: treekei
+Codename: stable
+Architectures: amd64 arm64
+Components: main
+Description: treekei apt repository
+SignWith: __KEYID__
