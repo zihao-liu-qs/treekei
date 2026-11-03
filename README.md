@@ -1,6 +1,6 @@
 # Treekei - File Tree with Line Counts
 
-![Platform](https://img.shields.io/badge/platform-macOS-lightgrey)
+![Platform](https://img.shields.io/badge/platform-macOS%20%7C%20Windows%20%7C%20Linux-lightgrey)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ---
@@ -34,6 +34,17 @@ brew update
 brew tap zihao-liu-qs/treekei
 brew trust --formula zihao-liu-qs/treekei/treekei   # Homebrew 7+ requires trusting third-party taps
 brew install treekei
+```
+
+### Windows
+
+```shell
+# Scoop
+scoop bucket add treekei https://github.com/zihao-liu-qs/scoop-treekei
+scoop install treekei
+
+# Winget (after the upstream PR lands)
+winget install zihao-liu-qs.treekei
 ```
 
 ## Options

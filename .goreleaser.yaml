@@ -56,3 +56,36 @@ brews:
       bin.install "treekei"
     test: |
       system "#{bin}/treekei", "--version"
+
+scoops:
+  - name: treekei
+    repository:
+      owner: zihao-liu-qs
+      name: scoop-treekei
+      branch: main
+      token: "{{ .Env.SCOOP_BUCKET_GITHUB_TOKEN }}"
+    homepage: "https://github.com/zihao-liu-qs/treekei"
+    description: "Command-line tool showing a file tree with line counts"
+    license: "MIT"
+
+winget:
+  - name: treekei
+    publisher: zihao-liu-qs
+    publisher_url: "https://github.com/zihao-liu-qs"
+    publisher_support_url: "https://github.com/zihao-liu-qs/treekei/issues/new"
+    package_identifier: zihao-liu-qs.treekei
+    license: "MIT"
+    short_description: "Command-line tool showing a file tree with line counts"
+    homepage: "https://github.com/zihao-liu-qs/treekei"
+    repository:
+      owner: zihao-liu-qs
+      name: winget-pkgs
+      branch: "treekei-{{ .Version }}"
+      token: "{{ .Env.WINGET_GITHUB_TOKEN }}"
+      pull_request:
+        enabled: true
+        base:
+          owner: microsoft
+          name: winget-pkgs
+          branch: master
+    skip_upload: true
