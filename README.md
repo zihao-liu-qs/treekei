@@ -55,6 +55,14 @@ brew install treekei
   Usage help.
 - `--lang str1\[,str2,...]`
   Only show files in target language.
+- `--match regexp`
+  Only show files whose path (relative to the scanned directory) matches the
+  regex. Repeatable. Uses RE2 syntax (no lookaround or backreferences).
+- `--no-match regexp`
+  Skip files and prune directories whose relative path matches the regex.
+  Repeatable.
+- `-i, --ignore-case`
+  Case-insensitive regex matching for `--match` and `--no-match`.
 - `list-langs`
   List all languages can be filtered
 

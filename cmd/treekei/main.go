@@ -8,6 +8,7 @@ import (
 
 	"github.com/spf13/cobra"
 
+	"github.com/zihao-liu-qs/treekei/internal/filter"
 	"github.com/zihao-liu-qs/treekei/internal/printer"
 	"github.com/zihao-liu-qs/treekei/internal/scanner"
 )
@@ -72,17 +73,42 @@ func init() {
 		"Only show entries that are above a certain line count threshold",
 	)
 
+	rootCmd.Flags().StringArrayVar(
+		&matchPatterns,
+		"match",
+		nil,
+		"Only show files whose relative path matches the regex (repeatable)",
+	)
+
+	rootCmd.Flags().StringArrayVar(
+		&noMatchPatterns,
+		"no-match",
+		nil,
+		"Skip files whose relative path matches; prune matching directories (repeatable)",
+	)
+
+	rootCmd.Flags().BoolVarP(
+		&ignoreCase,
+		"ignore-case",
+		"i",
+		false,
+		"Case-insensitive regex matching",
+	)
+
 	rootCmd.AddCommand(listLangsCmd)
 }
 
 var (
-	showAll      bool
-	maxDepth     int
-	sortBy       string
-	noColor      bool
-	dirOnly      bool
-	langs        string
-	minLineCount int
+	showAll         bool
+	maxDepth        int
+	sortBy          string
+	noColor         bool
+	dirOnly         bool
+	langs           string
+	minLineCount    int
+	matchPatterns   []string
+	noMatchPatterns []string
+	ignoreCase      bool
 )
 
 var rootCmd = &cobra.Command{
@@ -102,13 +128,29 @@ var rootCmd = &cobra.Command{
 			os.Exit(1)
 		}
 
-		var s *scanner.Scanner
+		matcher, err := filter.Compile(matchPatterns, noMatchPatterns, ignoreCase)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Error: invalid regex: %v\n", err)
+			os.Exit(2)
+		}
+
+		sortMode := scanner.SortByLines
 		switch sortBy {
 		case string(scanner.SortByLines):
-			s = scanner.NewScanner(showAll, scanner.SortByLines, langs)
+			sortMode = scanner.SortByLines
 		case string(scanner.SortByName):
-			s = scanner.NewScanner(showAll, scanner.SortByName, langs)
+			sortMode = scanner.SortByName
+		default:
+			fmt.Fprintf(os.Stderr, "Error: unknown sort mode %q (use lines|name)\n", sortBy)
+			os.Exit(2)
 		}
+
+		s := scanner.NewScanner(scanner.Options{
+			ShowAll: showAll,
+			SortBy:  sortMode,
+			Langs:   langs,
+			Matcher: matcher,
+		})
 
 		p := printer.NewPrinter(maxDepth, noColor, dirOnly, minLineCount)
 

@@ -9,6 +9,7 @@ import (
 	"strings"
 	"unicode/utf8"
 
+	"github.com/zihao-liu-qs/treekei/internal/filter"
 	"github.com/zihao-liu-qs/treekei/internal/tree"
 )
 
@@ -16,6 +17,8 @@ type Scanner struct {
 	ignoreNames map[string]bool
 	sortBy      SortMode
 	allowedExts map[string]bool
+	matcher     *filter.Matcher
+	root        string
 }
 
 type SortMode string
@@ -24,6 +27,14 @@ const (
 	SortByName  SortMode = "name"
 	SortByLines SortMode = "lines"
 )
+
+// Options configures a Scanner.
+type Options struct {
+	ShowAll bool
+	SortBy  SortMode
+	Langs   string
+	Matcher *filter.Matcher
+}
 
 // langExtensions maps language names to their file extensions
 var langExtensions = map[string][]string{
@@ -98,10 +109,10 @@ func ParseLangs(langs string) map[string]bool {
 	return allowed
 }
 
-func NewScanner(showAll bool, sortBy SortMode, langs string) *Scanner {
+func NewScanner(opts Options) *Scanner {
 	ignoreNames := make(map[string]bool)
 
-	if !showAll {
+	if !opts.ShowAll {
 		ignoreNames[".git"] = true
 		ignoreNames[".env"] = true
 		ignoreNames[".DS_Store"] = true
@@ -109,12 +120,18 @@ func NewScanner(showAll bool, sortBy SortMode, langs string) *Scanner {
 
 	return &Scanner{
 		ignoreNames: ignoreNames,
-		sortBy:      sortBy,
-		allowedExts: ParseLangs(langs),
+		sortBy:      opts.SortBy,
+		allowedExts: ParseLangs(opts.Langs),
+		matcher:     opts.Matcher,
 	}
 }
 
 func (s *Scanner) ScanDirectory(path string) (*tree.Node, []error) {
+	s.root = path
+	return s.scan(path)
+}
+
+func (s *Scanner) scan(path string) (*tree.Node, []error) {
 	var errors []error
 
 	info, err := os.Stat(path)
@@ -149,26 +166,35 @@ func (s *Scanner) ScanDirectory(path string) (*tree.Node, []error) {
 	totalLines := 0
 	for _, entry := range entries {
 		childPath := filepath.Join(path, entry.Name())
-		childNode, childErrors := s.ScanDirectory(childPath)
+		rel := relPath(s.root, childPath)
+
+		// A directory matched by an exclude pattern is pruned: no traversal,
+		// no line counting.
+		if entry.IsDir() {
+			if _, prune := s.matcher.MatchPath(rel, true); prune {
+				continue
+			}
+		}
+
+		childNode, childErrors := s.scan(childPath)
 		errors = append(errors, childErrors...)
 
-		if childNode == nil {
+		if childNode == nil || s.shouldIgnore(childNode.Name) {
 			continue
 		}
 
-		if s.shouldIgnore(childNode.Name) {
-			continue
+		if !childNode.IsDir {
+			// Skip files that don't match the language filter or the path filter
+			if s.shouldSkipByLang(childNode.Name) {
+				continue
+			}
+			if keep, _ := s.matcher.MatchPath(rel, false); !keep {
+				continue
+			}
 		}
 
-		// Skip files that don't match the language filter
-		if !childNode.IsDir && s.shouldSkipByLang(childNode.Name) {
-			continue
-		}
-
-		if childNode != nil {
-			node.Children = append(node.Children, childNode)
-			totalLines += childNode.Lines
-		}
+		node.Children = append(node.Children, childNode)
+		totalLines += childNode.Lines
 	}
 
 	switch s.sortBy {
@@ -184,6 +210,16 @@ func (s *Scanner) ScanDirectory(path string) (*tree.Node, []error) {
 
 	node.Lines = totalLines
 	return node, errors
+}
+
+// relPath returns path relative to root using forward slashes, matching the
+// form that filter patterns are written against.
+func relPath(root, path string) string {
+	rel, err := filepath.Rel(root, path)
+	if err != nil {
+		return filepath.ToSlash(path)
+	}
+	return filepath.ToSlash(rel)
 }
 
 func countLines(path string) (lines int, isBinary bool, err error) {
