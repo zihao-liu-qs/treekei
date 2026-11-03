@@ -1,0 +1,15 @@
+Package: treekei
+Version: 0.3.3
+Architecture: arm64
+Maintainer: zihao-liu-qs <zihao-liu-qs@users.noreply.github.com>
+Installed-Size: 2496
+Homepage: https://github.com/zihao-liu-qs/treekei
+Priority: optional
+Section: utils
+Filename: pool/main/t/treekei/treekei_0.3.3_arm64.deb
+Size: 1010556
+SHA256: 43d0b2565bf3132b06b324826faa2fc0524bcf106f9ca2480500842b3350c9c4
+SHA1: 44fbd316df25dcb78e3d889e826fd30cc1c0d656
+MD5sum: 7196cf95dfb9093c221929458cf8a02c
+Description: Command-line tool showing a file tree with line counts.
+

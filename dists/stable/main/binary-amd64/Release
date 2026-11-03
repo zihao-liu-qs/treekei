@@ -1,0 +1,5 @@
+Component: main
+Origin: treekei
+Label: treekei
+Architecture: amd64
+Description: treekei apt repository

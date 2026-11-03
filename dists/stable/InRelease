@@ -1,0 +1,47 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+Origin: treekei
+Label: treekei
+Codename: stable
+Date: Tue, 03 Nov 2026 07:33:57 UTC
+Architectures: amd64 arm64
+Components: main
+Description: treekei apt repository
+MD5Sum:
+ 81d9836ba059ceda0b1ceb7fcb0b916d 521 main/binary-amd64/Packages
+ caaad5c15e85781899776e3029592f20 378 main/binary-amd64/Packages.gz
+ 643f160fcef3b612a2b054ba3fb43afe 103 main/binary-amd64/Release
+ 4591197b30f120d42c6797a2d97ad9c3 521 main/binary-arm64/Packages
+ f15b4393e8f18881bc983defcd0432cc 375 main/binary-arm64/Packages.gz
+ efd819eb58b2f355ded855d10ca6cc0d 103 main/binary-arm64/Release
+SHA1:
+ fa1a0a70d3f4c253eced535c54abd6d96bf0aef7 521 main/binary-amd64/Packages
+ eb0c310ec7d0ca330d3d9d279065a9201fc38aa1 378 main/binary-amd64/Packages.gz
+ f4bd09c5279dae428910fc8cbc126225edd5f05c 103 main/binary-amd64/Release
+ b2cdcd8d6682fe1be43fcbd9202920ab65d01b87 521 main/binary-arm64/Packages
+ 716b72f1bd3b1e2ee5ecd18a625498f9c919bc3e 375 main/binary-arm64/Packages.gz
+ 2d860114fa8f53374622999defc506561b74fdef 103 main/binary-arm64/Release
+SHA256:
+ c1b5c9f31f0f8444dd1fc65553bc74a2951f67db85c9a1c5629a0ea2b8e7540e 521 main/binary-amd64/Packages
+ 4b664424972b5eefefb779ff69409d437005075ff4e0f8de9a62472dd10223fc 378 main/binary-amd64/Packages.gz
+ dbd1e72d3d4e8311093408d77e14a48c84a7a12748ba8f3eda2ee6bc8c15afb0 103 main/binary-amd64/Release
+ 4f02388ef6569f9a8b532a71d039541bb004b98c15656b4983810574ad98892f 521 main/binary-arm64/Packages
+ afeb3a6f99e36198c7c901c50816c6503bd57b34e631c4974fc42b12259aebbd 375 main/binary-arm64/Packages.gz
+ a8748fddf1dbf7c5ca8fe9c2938252deeecab3acc220899eff78f7d5f443a01f 103 main/binary-arm64/Release
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEHrGKmLZ9iZPyskglVlj9+7Oqel0FAmrpjmUACgkQVlj9+7Oq
+el0AxxAAnihyp3mJkbb+SQ6BRP/vIjG2+uMMh0CbHX2LDxHq22Xg3uONKNe1TZp8
+1YSsDI4bGOvhDIPuVI31dpJViOzQejHFfLIArB80cxNfjmJE//g2UH4o4ynAIq1P
+93jclOeKRNF5WTVFA8oVmGsRx8RdXJhwm/D1GjD65jlXEoN7AqSRKMwoX1iHa9aV
+PWmRxUVaIS0anO1UaFcxG9B8VGoeU72syZwddbiDaFuE1MBhWM8GEP04KRg2ywa5
+5EkMD8elkTm6ROMvDvQcFwcFUDrV4QQ6dgVKewrzdFMSB42FKcBEhiR1pAg7dCAR
+RXh8Gf9IYb1GO6bv32FNth8dVTnQKPZdZcVEj3mKVNLCL9zHWjz/ydQPtVeVhCtA
+rV54t5oLkyy18Uhw8K8z5cR9A2/ROjLtcCJbFEQNrXP4kRCHRvo9cdscrzFvTdmd
+q8+H8oWhMxhjnrQ5lFAjVfR9VUaEyp57qlvpT4cPaBM1gB98lVhV1iMX/4C2Nzfw
+/y7rgrb+jEomxkqaX3nooIiIKYPvtEC7jbnl35xdkUrpmyBuYejFofBk742ov4DN
+saXQvgoj3NDwfknV9N/sUh14Q4Xatp8LdDuCvCrlCR4bV4JV49C+7PvbwQt43+68
+15/pTe6h9I949zbWKZhk63lRD2KQF/9CtcyNq0kDdJ32HKdNvYI=
+=lq6E
+-----END PGP SIGNATURE-----
