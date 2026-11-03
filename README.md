@@ -1,7 +1,5 @@
 # Treekei - File Tree with Line Counts
 
-English | [简体中文](./README-CN.md)
-
 ![Platform](https://img.shields.io/badge/platform-macOS-lightgrey)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -38,10 +36,6 @@ brew trust --formula zihao-liu-qs/treekei/treekei   # Homebrew 7+ requires trust
 brew install treekei
 ```
 
-### Linux
-
-You can download the prebuilt binary from the GitHub Releases page and place it in a directory that is included in your `PATH`
-
 ## Options
 
 - `--all`
@@ -55,39 +49,32 @@ You can download the prebuilt binary from the GitHub Releases page and place it 
 - `--sort string`
   Sorting method of the tree structure.
   Defaults to sorting by lines of code. Can be set to alphabetical order.
-
-You can view all available options with:
-
-```shell
-treekei --help
-```
-
-To list the language names accepted by `--lang`:
-
-```shell
-treekei list-langs
-```
+- `--above int`
+  Only show files count more than int lines.
+- `--help`
+  Usage help.
+- `--lang str1\[,str2,...]`
+  Only show files in target language.
+- `list-langs`
+  List all languages can be filtered
 
 ------
 
-## Supported Platforms
-
-### Operating Systems
+## Supported OP System
 
 Currently tested on macOS (Apple Silicon).
-In theory, it should work on any Unix-like system.
-Windows is not officially supported yet, sorry.
+In theory, it should work on any kind of OP system
 
-### Installation Methods
+## Installation
 
-Homebrew installation is currently provided for macOS only.
-Users on other platforms can build from source:
+Homebrew is supported.
+Or you can build from source and place the output in a directory that is included in your PATH
 
 ```shell
 go build -o treekei ./cmd/treekei/main.go
 ```
 
-### Color Support
+## Color Support
 
 If your terminal supports colors, `treekei` will display colored output.
 
