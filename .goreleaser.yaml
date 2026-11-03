@@ -88,4 +88,3 @@ winget:
           owner: microsoft
           name: winget-pkgs
           branch: master
-    skip_upload: true
